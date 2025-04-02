@@ -1,0 +1,22 @@
+.type-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.type-select:focus {
+  outline: none;
+  border-color: #3182CE;
+  box-shadow: 0 0 5px #3182CE;
+}
+
+.type-select option {
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+}
