@@ -1,49 +1,95 @@
 .pokemon-list-container {
   width: 100%;
   overflow-x: auto;
-  margin-top: 20px;
+  margin-top: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .pokemon-table {
   width: 100%;
   border-collapse: collapse;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  color: white;
+  background: var(--card-bg);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
 }
 
 .pokemon-table th,
 .pokemon-table td {
-  padding: 12px;
+  padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .pokemon-table th {
-  font-weight: bold;
-  background: rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+  background: rgba(17, 24, 39, 0.5);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.pokemon-table tr:hover {
+  background: var(--card-bg-hover);
+}
+
+.pokemon-table tr:last-child td {
+  border-bottom: none;
 }
 
 .pokemon-image {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 2px solid var(--primary-color);
+  background-color: rgba(79, 70, 229, 0.1);
+  padding: 0.25rem;
+  transition: all 0.3s ease;
+}
+
+.pokemon-image:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(79, 70, 229, 0.5);
 }
 
 .pokemon-name {
   text-transform: capitalize;
-  font-weight: bold;
+  font-weight: 600;
+  color: var(--text-color);
 }
 
 .type-badge {
   display: inline-block;
-  padding: 4px 8px;
-  margin-right: 4px;
-  border-radius: 4px;
-  font-size: 12px;
+  padding: 0.25rem 0.75rem;
+  margin-right: 0.375rem;
+  margin-bottom: 0.375rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
   color: white;
   text-transform: capitalize;
-  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+/* Apply the same gradient backgrounds from Stats.css */
+.type-badge.normal { background: linear-gradient(135deg, #A8A878, #C6C6A7); }
+.type-badge.fire { background: linear-gradient(135deg, #F08030, #F5AC78); }
+.type-badge.water { background: linear-gradient(135deg, #6890F0, #9DB7F5); }
+.type-badge.grass { background: linear-gradient(135deg, #78C850, #A7DB8D); }
+.type-badge.electric { background: linear-gradient(135deg, #F8D030, #FAE078); }
+.type-badge.ice { background: linear-gradient(135deg, #98D8D8, #BCE6E6); }
+.type-badge.fighting { background: linear-gradient(135deg, #C03028, #D67873); }
+.type-badge.poison { background: linear-gradient(135deg, #A040A0, #C183C1); }
+.type-badge.ground { background: linear-gradient(135deg, #E0C068, #EBD69D); }
+.type-badge.flying { background: linear-gradient(135deg, #A890F0, #C6B7F5); }
+.type-badge.psychic { background: linear-gradient(135deg, #F85888, #FA92B2); }
+.type-badge.bug { background: linear-gradient(135deg, #A8B820, #C6D16E); }
+.type-badge.rock { background: linear-gradient(135deg, #B8A038, #D1C17D); }
+.type-badge.ghost { background: linear-gradient(135deg, #705898, #A292BC); }
+.type-badge.dark { background: linear-gradient(135deg, #705848, #A29288); }
+.type-badge.dragon { background: linear-gradient(135deg, #7038F8, #A27DFA); }
+.type-badge.steel { background: linear-gradient(135deg, #B8B8D0, #D1D1E0); }
+.type-badge.fairy { background: linear-gradient(135deg, #EE99AC, #F4BDC9); }
