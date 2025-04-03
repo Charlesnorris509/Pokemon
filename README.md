@@ -2,9 +2,15 @@
 
 Submitted by: **Charles Norris**
 
-This web app: **insert description**
+This web app: **# Pokémon Dashboard: Your Interactive Pokémon Explorer
 
-Time spent: **X** hours spent in total
+This React app lets you dive into the world of Pokémon with a sleek, data-driven dashboard. Browse through hundreds of Pokémon, filter them by type (like Fire or Water), and narrow your search using stats like HP or Attack power.
+
+The dashboard shows you cool insights in real-time - which Pokémon has the highest HP, who's got the strongest attack, and how many of each type exist in your current view. The clean interface makes it super easy to explore, with instant search and responsive filters.
+
+As you browse, the app intelligently loads more Pokémon data when needed, with smooth pagination to navigate through your results. Whether you're a casual fan or a competitive trainer analyzing stats, this dashboard puts all the Pokémon data you need at your fingertips!**
+
+Time spent: **10** hours spent in total
 
 ## Required Features
 
@@ -16,7 +22,10 @@ The following **required** functionality is completed:
 - [X] **`useEffect` React hook and `async`/`await` are used**
 - [X] **The app dashboard includes at least three summary statistics about the data** 
   - The app dashboard includes at least three summary statistics about the data, such as:
-    - *insert details here*
+    - Total Pokémon
+    - Average Weight (kg)
+    - Average Height (m)
+    - Most Common Type
 - [X] **A search bar allows the user to search for an item in the fetched data**
   - The search bar **correctly** filters items in the list, only displaying items matching the search query
   - The list of results dynamically updates as the user types into the search bar
@@ -27,23 +36,23 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Multiple filters can be applied simultaneously
-- [ ] Filters use different input types
+- [X] Multiple filters can be applied simultaneously
+- [X] Filters use different input types
   - e.g., as a text input, a dropdown or radio selection, and/or a slider
-- [ ] The user can enter specific bounds for filter values
+- [X] The user can enter specific bounds for filter values
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you added to improve the site's functionality!
+* [X] Implemented Pagination to sequence API Calls
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Pokemon.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  
+GIF created with ScreenToGif
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
@@ -55,7 +64,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2025] [Charles Norris]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
