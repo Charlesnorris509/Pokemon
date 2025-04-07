@@ -1,5 +1,6 @@
-import React from 'react'
-import './PokemonList.css'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './PokemonList.css';
 
 export default function PokemonList({ pokemon }) {
   return (
@@ -17,15 +18,21 @@ export default function PokemonList({ pokemon }) {
         </thead>
         <tbody>
           {pokemon.map(p => (
-            <tr key={p.id}>
+            <tr key={p.id} className="pokemon-row">
               <td>
-                <img 
-                  src={p.sprites.front_default} 
-                  alt={p.name}
-                  className="pokemon-image"
-                />
+                <Link to={`/pokemon/${p.id}`} className="pokemon-link">
+                  <img 
+                    src={p.sprites.front_default} 
+                    alt={p.name}
+                    className="pokemon-image"
+                  />
+                </Link>
               </td>
-              <td className="pokemon-name">{p.name}</td>
+              <td className="pokemon-name">
+                <Link to={`/pokemon/${p.id}`} className="pokemon-link">
+                  {p.name}
+                </Link>
+              </td>
               <td>
                 {p.types.map(type => (
                   <span 
@@ -44,5 +51,5 @@ export default function PokemonList({ pokemon }) {
         </tbody>
       </table>
     </div>
-  )
+  );
 }

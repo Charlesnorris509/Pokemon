@@ -1,6 +1,10 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
 import './App.css';
+
+// Components
+import Sidebar from './components/Sidebar';
 import Stats from './components/Stats';
 import SearchBar from './components/SearchBar';
 import TypeFilter from './components/TypeFilter';
@@ -8,6 +12,8 @@ import StatsFilter from './components/StatsFilter';
 import StatFilterCheckbox from './components/StatFilterCheckbox';
 import SortOptionsRadio from './components/SortOptionsRadio';
 import PokemonList from './components/PokemonList';
+import PokemonDetail from './components/PokemonDetail';
+import DashboardCharts from './components/DashboardCharts';
 
 // Debounce utility for search optimization
 function useDebounce(value, delay) {
@@ -23,8 +29,64 @@ function useDebounce(value, delay) {
   return debouncedValue;
 }
 
+// About Page Component
+function About() {
+  return (
+    <div className="about-container">
+      <h1 className="about-title">About Pokémon Dashboard</h1>
+      <div className="about-content">
+        <p>
+          Welcome to the Pokémon Dashboard, an interactive data exploration tool that lets you browse, filter, and analyze Pokémon statistics.
+        </p>
+        <p>
+          This application uses data from the <a href="https://pokeapi.co/" target="_blank" rel="noopener noreferrer">PokéAPI</a>, 
+          a comprehensive RESTful API providing information on Pokémon, their moves, abilities, types, and more.
+        </p>
+        
+        <h2>Features</h2>
+        <ul>
+          <li>Browse a comprehensive list of Pokémon with pagination</li>
+          <li>Filter Pokémon by name, type, and various statistics</li>
+          <li>Sort Pokémon by different criteria</li>
+          <li>View detailed information about each Pokémon</li>
+          <li>Analyze Pokémon data through interactive charts</li>
+        </ul>
+        
+        <h2>Data Visualizations</h2>
+        <p>
+          The dashboard includes visualizations that help you understand trends and distributions in the Pokémon world:
+        </p>
+        <ul>
+          <li><strong>Type Distribution:</strong> Shows the proportion of different Pokémon types in your current filtered selection</li>
+          <li><strong>Average Base Stats:</strong> Displays the average of each stat across all Pokémon in your selection</li>
+        </ul>
+        
+        <h2>Technologies Used</h2>
+        <ul>
+          <li>React for the user interface</li>
+          <li>React Router for navigation</li>
+          <li>Recharts for data visualization</li>
+          <li>Axios for API requests</li>
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+// Charts Page Component
+function ChartsPage({ pokemon }) {
+  return (
+    <div className="charts-page">
+      <h1 className="page-title">Pokémon Data Visualizations</h1>
+      <p className="page-description">
+        This page provides interactive visualizations of Pokémon data to help you discover patterns and insights.
+      </p>
+      <DashboardCharts pokemon={pokemon} />
+    </div>
+  );
+}
+
 function App() {
-  const [activeTab, setActiveTab] = useState('dashboard');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pokemon, setPokemon] = useState([]);
@@ -600,159 +662,230 @@ function App() {
     }
   }, [typeFilter, getFilteredPokemonWithPagination, allPokemon.length]);
 
-  return (
-    <div className="app">
-      <div className="navbar">
-        <div className="navbar-logo">
-          <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pokemon Logo" />
-          <h3>Pokémon Data</h3>
-        </div>
-        
-        <h2 className="nav-title">Navigation</h2>
-        
-        <ul className="nav-buttons">
-          <li className={`nav-button ${activeTab === 'dashboard' ? 'active' : ''}`}>
-            <button onClick={() => setActiveTab('dashboard')}>
-              <span>📊</span> Dashboard
-            </button>
-          </li>
-          <li className={`nav-button ${activeTab === 'pokemon' ? 'active' : ''}`}>
-            <button onClick={() => setActiveTab('pokemon')}>
-              <span>🎮</span> Pokemon List
-            </button>
-          </li>
-          <li className={`nav-button ${activeTab === 'stats' ? 'active' : ''}`}>
-            <button onClick={() => setActiveTab('stats')}>
-              <span>📈</span> Statistics
-            </button>
-          </li>
-          <li className={`nav-button ${activeTab === 'about' ? 'active' : ''}`}>
-            <button onClick={() => setActiveTab('about')}>
-              <span>ℹ️</span> About
-            </button>
-          </li>
-          <li className={`nav-button ${activeTab === 'settings' ? 'active' : ''}`}>
-            <button onClick={() => setActiveTab('settings')}>
-              <span>⚙️</span> Settings
-            </button>
-          </li>
-        </ul>
+  // Dashboard component with all filters and Pokemon list
+  const Dashboard = () => (
+    <>
+      <div className="header">
+        <h1 className="title">Pokémon Data Dashboard</h1>
+        <p className="subtitle">Explore and analyze Pokémon statistics</p>
       </div>
-      
-      <div className="container">
-        <div className="header">
-          <h1 className="title">Pokemon Data Dashboard</h1>
-          <p className="subtitle">Explore and analyze Pokemon statistics</p>
-        </div>
 
-        {error ? (
-          <div className="error-container">
-            <p className="error-message">{error}</p>
-            <button className="retry-button" onClick={handleRetry}>Retry</button>
-          </div>
-        ) : loading && allPokemon.length === 0 ? (
-          <div className="loading">
-            <div className="spinner"></div>
-          </div>
-        ) : (
-          <>
-            <Stats stats={stats} />
-            
-            <div className="filters-container">
-              <div className="filters-header">
-                <h3>Filters</h3>
-                <div className="filter-actions">
-                  <button 
-                    className="toggle-filters-button" 
-                    onClick={toggleAdvancedFilters}
-                  >
-                    {showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters'}
-                  </button>
-                  <button 
-                    className="reset-filters-button" 
-                    onClick={resetFilters}
-                  >
-                    Reset Filters
-                  </button>
-                </div>
-              </div>
-              
-              <div className="basic-filters">
-                <div className="search-container">
-                  <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-                </div>
-                <div className="filter-container">
-                  <TypeFilter typeFilter={typeFilter} setTypeFilter={handleTypeFilterChange} />
-                </div>
-              </div>
-              
-              {showAdvancedFilters && (
-                <>
-                  <StatsFilter 
-                    statFilters={statFilters} 
-                    setStatFilters={setStatFilters}
-                    minMaxValues={minMaxValues}
-                  />
-                  
-                  <StatFilterCheckbox 
-                    statOptionsFilter={statOptionsFilter}
-                    setStatOptionsFilter={setStatOptionsFilter}
-                  />
-                  
-                  <SortOptionsRadio 
-                    sortOption={sortOption}
-                    setSortOption={setSortOption}
-                  />
-                </>
-              )}
-              
-              <div className="filter-results">
-                <p>Found <strong>{totalFiltered}</strong> Pokemon matching your filters</p>
+      {error ? (
+        <div className="error-container">
+          <p className="error-message">{error}</p>
+          <button className="retry-button" onClick={handleRetry}>Retry</button>
+        </div>
+      ) : loading && allPokemon.length === 0 ? (
+        <div className="loading">
+          <div className="spinner"></div>
+        </div>
+      ) : (
+        <>
+          <Stats stats={stats} />
+          
+          <DashboardCharts pokemon={pokemon} />
+          
+          <div className="filters-container">
+            <div className="filters-header">
+              <h3>Filters</h3>
+              <div className="filter-actions">
+                <button 
+                  className="toggle-filters-button" 
+                  onClick={toggleAdvancedFilters}
+                >
+                  {showAdvancedFilters ? 'Hide Advanced Filters' : 'Show Advanced Filters'}
+                </button>
+                <button 
+                  className="reset-filters-button" 
+                  onClick={resetFilters}
+                >
+                  Reset Filters
+                </button>
               </div>
             </div>
+            
+            <div className="basic-filters">
+              <div className="search-container">
+                <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+              </div>
+              <div className="filter-container">
+                <TypeFilter typeFilter={typeFilter} setTypeFilter={handleTypeFilterChange} />
+              </div>
+            </div>
+            
+            {showAdvancedFilters && (
+              <>
+                <StatsFilter 
+                  statFilters={statFilters} 
+                  setStatFilters={setStatFilters}
+                  minMaxValues={minMaxValues}
+                />
+                
+                <StatFilterCheckbox 
+                  statOptionsFilter={statOptionsFilter}
+                  setStatOptionsFilter={setStatOptionsFilter}
+                />
+                
+                <SortOptionsRadio 
+                  sortOption={sortOption}
+                  setSortOption={setSortOption}
+                />
+              </>
+            )}
+            
+            <div className="filter-results">
+              <p>Found <strong>{totalFiltered}</strong> Pokémon matching your filters</p>
+            </div>
+          </div>
 
-            {loading && filteredPokemon.length === 0 ? (
-              <div className="loading">
-                <div className="spinner"></div>
-              </div>
-            ) : (
-              <PokemonList pokemon={filteredPokemon} />
-            )}
-            
-            {/* Pagination controls */}
-            {totalPages > 1 && (
-              <div className="pagination">
-                <button 
-                  className="pagination-button" 
-                  disabled={currentPage === 1}
-                  onClick={() => handlePageChange(currentPage - 1)}
-                >
-                  Previous
-                </button>
-                <span className="page-indicator">
-                  Page {currentPage} of {totalPages} 
-                  {totalFiltered > 0 && ` (${totalFiltered} Pokemon total)`}
-                </span>
-                <button 
-                  className="pagination-button" 
-                  disabled={currentPage === totalPages}
-                  onClick={() => handlePageChange(currentPage + 1)}
-                >
-                  Next
-                </button>
-              </div>
-            )}
-            
-            {loading && filteredPokemon.length > 0 && (
-              <div className="loading-more">
-                <div className="spinner-small"></div>
-                <p>Loading more Pokemon...</p>
-              </div>
-            )}
-          </>
-        )}
+          {loading && filteredPokemon.length === 0 ? (
+            <div className="loading">
+              <div className="spinner"></div>
+            </div>
+          ) : (
+            <PokemonList pokemon={filteredPokemon} />
+          )}
+          
+          {/* Pagination controls */}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button 
+                className="pagination-button" 
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                Previous
+              </button>
+              <span className="page-indicator">
+                Page {currentPage} of {totalPages} 
+                {totalFiltered > 0 && ` (${totalFiltered} Pokémon total)`}
+              </span>
+              <button 
+                className="pagination-button" 
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                Next
+              </button>
+            </div>
+          )}
+          
+          {loading && filteredPokemon.length > 0 && (
+            <div className="loading-more">
+              <div className="spinner-small"></div>
+              <p>Loading more Pokémon...</p>
+            </div>
+          )}
+        </>
+      )}
+    </>
+  );
+
+  // Pokemon browser component with filters but optimized for browsing
+  const PokemonBrowser = () => (
+    <>
+      <div className="header">
+        <h1 className="title">Pokémon Browser</h1>
+        <p className="subtitle">Browse and discover Pokémon</p>
       </div>
-    </div>
+
+      {error ? (
+        <div className="error-container">
+          <p className="error-message">{error}</p>
+          <button className="retry-button" onClick={handleRetry}>Retry</button>
+        </div>
+      ) : loading && allPokemon.length === 0 ? (
+        <div className="loading">
+          <div className="spinner"></div>
+        </div>
+      ) : (
+        <>
+          <div className="filters-container">
+            <div className="filters-header">
+              <h3>Search & Filter</h3>
+              <div className="filter-actions">
+                <button 
+                  className="reset-filters-button" 
+                  onClick={resetFilters}
+                >
+                  Reset Filters
+                </button>
+              </div>
+            </div>
+            
+            <div className="basic-filters">
+              <div className="search-container">
+                <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+              </div>
+              <div className="filter-container">
+                <TypeFilter typeFilter={typeFilter} setTypeFilter={handleTypeFilterChange} />
+              </div>
+            </div>
+            
+            <div className="filter-results">
+              <p>Found <strong>{totalFiltered}</strong> Pokémon matching your filters</p>
+            </div>
+          </div>
+
+          {loading && filteredPokemon.length === 0 ? (
+            <div className="loading">
+              <div className="spinner"></div>
+            </div>
+          ) : (
+            <PokemonList pokemon={filteredPokemon} />
+          )}
+          
+          {/* Pagination controls */}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button 
+                className="pagination-button" 
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                Previous
+              </button>
+              <span className="page-indicator">
+                Page {currentPage} of {totalPages} 
+                {totalFiltered > 0 && ` (${totalFiltered} Pokémon total)`}
+              </span>
+              <button 
+                className="pagination-button" 
+                disabled={currentPage === totalPages}
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                Next
+              </button>
+            </div>
+          )}
+          
+          {loading && filteredPokemon.length > 0 && (
+            <div className="loading-more">
+              <div className="spinner-small"></div>
+              <p>Loading more Pokémon...</p>
+            </div>
+          )}
+        </>
+      )}
+    </>
+  );
+
+  return (
+    <Router>
+      <div className="app">
+        <Sidebar />
+        <div className="main-content">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/charts" element={<ChartsPage pokemon={pokemon} />} />
+            <Route path="/pokemon" element={<PokemonBrowser />} />
+            <Route path="/pokemon/:id" element={<PokemonDetail />} />
+            <Route path="/about" element={<About />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 }
 

@@ -93,3 +93,24 @@
 .type-badge.dragon { background: linear-gradient(135deg, #7038F8, #A27DFA); }
 .type-badge.steel { background: linear-gradient(135deg, #B8B8D0, #D1D1E0); }
 .type-badge.fairy { background: linear-gradient(135deg, #EE99AC, #F4BDC9); }
+
+.pokemon-link {
+  color: var(--text-color);
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.pokemon-link:hover {
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.pokemon-row {
+  transition: all 0.2s ease;
+}
+
+.pokemon-row:hover {
+  background-color: rgba(79, 70, 229, 0.1) !important;
+  cursor: pointer;
+}
