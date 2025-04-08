@@ -2,7 +2,7 @@
 
 Submitted by: **Charles Norris**
 
-This web app: **# Pokémon Dashboard: Your Interactive Pokémon Explorer
+This web app: ** Pokémon Dashboard: Your Interactive Pokémon Explorer
 
 This React app lets you dive into the world of Pokémon with a sleek, data-driven dashboard. Browse through hundreds of Pokémon, filter them by type (like Fire or Water), and narrow your search using stats like HP or Attack power.
 
@@ -38,16 +38,17 @@ The following **optional** features are implemented:
   
 The following **additional** features are implemented:
 
-* [ ] List anything else that you added to improve the site's functionality!
+* [X] Deployment using Netlify
+* [X] Custom Title and Icons
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Pokemon2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  
+GIF created with ScreenToGif
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
